@@ -166,10 +166,12 @@ extension Presentr: UIViewControllerTransitioningDelegate {
     }
 
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        HLPresentrAgent.shared.add(presentr: self)
         return transitionForPresent.animation()
     }
 
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        HLPresentrAgent.shared.remove(presentr: self)
         return transitionForDismiss.animation()
     }
 
@@ -216,4 +218,22 @@ public extension UIViewController {
                                        completion: completion)
     }
 
+}
+
+
+
+class HLPresentrAgent {
+    static let shared = HLPresentrAgent()
+    
+    private(set) var presentrList: [Presentr] = []
+    
+    func add(presentr: Presentr) {
+        presentrList.append(presentr)
+    }
+    func remove(presentr: Presentr) {
+        if let index = presentrList.firstIndex(of: presentr) {
+            presentrList.remove(at: index)
+        }
+    }
+    
 }

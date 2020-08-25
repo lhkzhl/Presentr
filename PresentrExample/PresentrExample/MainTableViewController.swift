@@ -273,9 +273,10 @@ extension MainTableViewController {
     // MARK: Alert
 
     @objc func alertDefault() {
+        let presenter = Presentr(presentationType: .alert)
         presenter.presentationType = .alert
-        presenter.transitionType = nil
-        presenter.dismissTransitionType = nil
+        presenter.transitionType = .coverHorizontalFromLeft
+//        presenter.dismissTransitionType = .crossDissolve
         presenter.dismissAnimated = true
         customPresentViewController(presenter, viewController: alertController, animated: true)
     }
